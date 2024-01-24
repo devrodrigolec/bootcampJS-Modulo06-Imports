@@ -81,3 +81,11 @@ export const obtenerMensajeDeMePlanto = (puntuacionJugador: number): string => {
 
   return mensaje;
 };
+
+export const reiniciarPuntosJugador = () => {
+  partida.puntuacionJugador = 0;
+}
+
+export const obtenerPuntuacionJugador = () => {
+  return partida.puntuacionJugador;
+}

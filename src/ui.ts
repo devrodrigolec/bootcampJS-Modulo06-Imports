@@ -1,14 +1,15 @@
 import {
-  formatearURLDeCarta,
-  mensajeHasGanado,
-  obtenerNumeroRandom,
-  obtenerNumerodeCarta,
-  sumarPuntuacionJugador,
   asignarPuntuacionJugador,
   calcularPuntuacion,
+  formatearURLDeCarta,
+  mensajeHasGanado,
   obtenerMensajeDeMePlanto,
+  obtenerNumerodeCarta,
+  obtenerNumeroRandom,
+  obtenerPuntuacionJugador,
+  reiniciarPuntosJugador,
+  sumarPuntuacionJugador,
 } from "./motor";
-import { partida } from "./modelo";
 
 export const puntuacionDiv = document.getElementById("puntuacion-jugador");
 export const pedirCartaBoton = document.getElementById("pedir-carta");
@@ -112,8 +113,8 @@ export const gestionarBotonesMePlanto = (): void => {
 };
 
 export const reiniciarJuego = (): void => {
-  partida.puntuacionJugador = 0;
-  mostrarPuntuacion(partida.puntuacionJugador);
+  reiniciarPuntosJugador();
+  mostrarPuntuacion(obtenerPuntuacionJugador());
   vaciarMesaDeCartas();
   gestionarBotonesReiniciarJuego();
   if (mensajeJuevoDiv && mensajeJuevoDiv instanceof HTMLDivElement) {
@@ -122,7 +123,7 @@ export const reiniciarJuego = (): void => {
 };
 
 export const comprobarPartida = (): void => {
-  if (partida.puntuacionJugador === 7.5) {
+  if (obtenerPuntuacionJugador() === 7.5) {
     const mensajeAJugador: string = mensajeHasGanado();
     mostrarMensajeAJugador(mensajeAJugador);
     if (pedirCartaBoton && pedirCartaBoton instanceof HTMLButtonElement) {
@@ -132,7 +133,7 @@ export const comprobarPartida = (): void => {
       desactivarBoton(mePlantoBoton);
     }
   }
-  if (partida.puntuacionJugador > 7.5) {
+  if (obtenerPuntuacionJugador() > 7.5) {
     MostrarGameOver();
   }
 };
@@ -149,7 +150,7 @@ export const pedirCarta = (): void => {
   const puntuacion = calcularPuntuacion(carta);
   const puntuacionSumada = sumarPuntuacionJugador(puntuacion);
   asignarPuntuacionJugador(puntuacionSumada);
-  mostrarPuntuacion(partida.puntuacionJugador);
+  mostrarPuntuacion(obtenerPuntuacionJugador());
   if (cartasJugadorDiv && cartasJugadorDiv instanceof HTMLDivElement) {
     mostrarCarta(carta, cartasJugadorDiv);
   }
@@ -158,7 +159,7 @@ export const pedirCarta = (): void => {
 
 export const mePlanto = (): void => {
   gestionarBotonesMePlanto();
-  const mensajeAJugador = obtenerMensajeDeMePlanto(partida.puntuacionJugador);
+  const mensajeAJugador = obtenerMensajeDeMePlanto(obtenerPuntuacionJugador());
   mostrarMensajeAJugador(mensajeAJugador);
 };
 
